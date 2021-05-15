@@ -1,6 +1,6 @@
 const User = require('../resources/users/user.model');
 const Board = require('../resources/boards/board.model');
-const { DEFAULT_COUNT_USERS, NOT_EXIST_USER } = require('../const');
+const { DEFAULT_COUNT_USERS } = require('../const');
 
 class Database {
     constructor(count = 3) {
@@ -45,7 +45,7 @@ class Database {
     foundItem(id, table) {
         const found = this[table].find((item) => item.id === id);
         if (!found) {
-            throw new Error(NOT_EXIST_USER);
+            return false;
         }
 
         return found;

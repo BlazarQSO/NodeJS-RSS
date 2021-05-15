@@ -3,18 +3,18 @@ const Board = require('./board.model');
 
 const getAll = () => boardRepo.getAll();
 
-const addUser = (board) => boardRepo.addUser(new Board(board));
+const addBoard = (board) => boardRepo.addBoard(new Board(board));
 
-const removeUser = (id) => boardRepo.removeUser(id);
+const removeBoard = (id) => boardRepo.removeBoard(id);
 
-const getUser = (id) => boardRepo.getUser(id);
+const getBoard = (id) => boardRepo.getBoard(id);
 
-const updateUser = (id, body) => boardRepo.updateUser(id, body);
+const updateBoard = (id, body) => boardRepo.updateBoard(id, body);
 
 module.exports = {
     getAll,
-    addUser,
-    removeUser,
-    getUser,
-    updateUser,
+    addBoard,
+    removeBoard,
+    getBoard,
+    updateBoard,
 };
