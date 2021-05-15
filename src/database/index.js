@@ -33,13 +33,10 @@ class Database {
     }
 
     removeItem(id, table) {
-        if (!this.foundItem(id, table)) {
-            return false;
+        if (this.foundItem(id, table)) {
+            this[table] = this[table].filter((item) => item.id !== id);
+            this.removeDependencies(id, table);
         };
-
-        this[table] = this[table].filter((item) => item.id !== id);
-
-        this.removeDependencies(id, table);
     }
 
     getItem(id, table) {
