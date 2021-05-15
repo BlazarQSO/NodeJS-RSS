@@ -1,11 +1,11 @@
-const uuid = require('uuid');
+const faker = require('faker');
 
 class User {
   constructor({
-    id = uuid(),
-    name = 'USER',
-    login = 'user',
-    password = 'P@55w0rd'
+    id = faker.datatype.uuid(),
+    name = faker.name.findName(),
+    login = faker.internet.userName(),
+    password = faker.internet.password(),
   } = {}) {
     this.id = id;
     this.name = name;
