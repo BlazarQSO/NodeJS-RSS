@@ -1,52 +1,54 @@
 const User = require('../resources/users/user.model');
+const Board = require('../resources/boards/board.model');
 const { DEFAULT_COUNT_USERS, NOT_EXIST_USER } = require('../const');
 
 class Database {
     constructor(count = 3) {
         this.Users = [];
+        this.Boards = [];
+        this.Tasks = [];
         this.initDatabase(count);
     }
 
     initDatabase(count) {
-        this.initUsers(count);
-    }
-
-    initUsers(count) {
         for (let i = 0; i < count; i += 1) {
             this.Users.push(new User());
+            this.Boards.push(new Board());
         }
     }
 
-    addUser(user) {
-        this.Users.push(user);
+    addItem(user, table) {
+        this[table].push(user);
         return user;
     }
 
-    removeUser(id) {
-        this.foundUser(id);
+    removeItem(id, table) {
+        this.foundItem(id, table);
 
-        this.Users = this.Users.filter((user) => user.id !== id);
+        this[table] = this[table].filter((item) => item.id !== id);
     }
 
-    getUser(id) {
-        return this.foundUser(id);
+    getItem(id, table) {
+        return this.foundItem(id, table);
     }
 
-    updateUser(id, body) {
-        this.foundUser(id);
+    updateItem(id, body, table) {
+        this.foundItem(id, table);
 
-        const index = this.Users.findIndex((user) => user.id === id);
-        const updatedUser = { ...this.Users[index], id, ...body };
-        this.Users[index] = updatedUser;
-        return updatedUser;
+        const index = this[table].findIndex((item) => item.id === id);
+        const updated = { ...this[table][index], id, ...body };
+        this[table][index] = updated;
+
+        return updated;
     }
 
-    foundUser(id) {
-        const foundUser = this.Users.find((user) => user.id === id);
-        if (!foundUser) {
+    foundItem(id, table) {
+        const found = this[table].find((item) => item.id === id);
+        if (!found) {
             throw new Error(NOT_EXIST_USER);
         }
-        return foundUser;
+
+        return found;
     }
 }
 
