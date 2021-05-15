@@ -1,5 +1,4 @@
 const router = require('express').Router();
-// const Board = require('./board.model');
 const boardService = require('./board.service');
 
 router.route('/').get(async (req, res) => {
@@ -14,7 +13,7 @@ router.route('/').post(async (req, res) => {
 
 router.route('/:id').delete(async (req, res) => {
   await boardService.removeBoard(req.params.id);
-  res.sendStatus(200);
+  res.sendStatus(204);
 });
 
 router.route('/:id').get(async (req, res) => {

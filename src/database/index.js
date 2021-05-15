@@ -1,9 +1,14 @@
 const User = require('../resources/users/user.model');
 const Board = require('../resources/boards/board.model');
-const { DEFAULT_COUNT_USERS } = require('../const');
+const Task = require('../resources/tasks/task.model');
+const {
+    DEFAULT_COUNT_USERS,
+    BD_TABLE_USERS,
+    BD_TABLE_BOARDS,
+} = require('../const');
 
 class Database {
-    constructor(count = 3) {
+    constructor(count = 0) {
         this.Users = [];
         this.Boards = [];
         this.Tasks = [];
@@ -14,6 +19,11 @@ class Database {
         for (let i = 0; i < count; i += 1) {
             this.Users.push(new User());
             this.Boards.push(new Board());
+            this.Tasks.push(new Task({
+                userId: this.Users[i].id,
+                boardId: this.Boards[i].id,
+                columnId: this.Boards[i].columns[0].id,
+            }));
         }
     }
 
@@ -26,6 +36,18 @@ class Database {
         this.foundItem(id, table);
 
         this[table] = this[table].filter((item) => item.id !== id);
+
+        if (table === BD_TABLE_USERS) {
+            for (let i = 0; i < this.Tasks.length; i += 1) {
+                if (this.Tasks[i].userId === id) {
+                    this.Tasks[i].userId = null;
+                }
+            }
+        }
+
+        if (table === BD_TABLE_BOARDS) {
+            this.Tasks = this.Tasks.filter((task) => task.boardId !== id);
+        }
     }
 
     getItem(id, table) {
