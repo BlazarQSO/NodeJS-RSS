@@ -33,21 +33,13 @@ class Database {
     }
 
     removeItem(id, table) {
-        this.foundItem(id, table);
+        if (!this.foundItem(id, table)) {
+            return false;
+        };
 
         this[table] = this[table].filter((item) => item.id !== id);
 
-        if (table === BD_TABLE_USERS) {
-            for (let i = 0; i < this.Tasks.length; i += 1) {
-                if (this.Tasks[i].userId === id) {
-                    this.Tasks[i].userId = null;
-                }
-            }
-        }
-
-        if (table === BD_TABLE_BOARDS) {
-            this.Tasks = this.Tasks.filter((task) => task.boardId !== id);
-        }
+        this.removeDependencies(id, table);
     }
 
     getItem(id, table) {
@@ -71,6 +63,23 @@ class Database {
         }
 
         return found;
+    }
+
+    removeDependencies(id, table) {
+        switch (table) {
+            case BD_TABLE_USERS:
+                for (let i = 0; i < this.Tasks.length; i += 1) {
+                    if (this.Tasks[i].userId === id) {
+                        this.Tasks[i].userId = null;
+                    }
+                }
+                break;
+            case BD_TABLE_BOARDS:
+                this.Tasks = this.Tasks.filter((task) => task.boardId !== id);
+                break;
+            default:
+                break;
+        }
     }
 }
 
