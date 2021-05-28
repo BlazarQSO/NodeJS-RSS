@@ -29,7 +29,6 @@ class Database {
 
     addItem(user, table) {
         this[table].push(user);
-        return user;
     }
 
     removeItem(id, table) {

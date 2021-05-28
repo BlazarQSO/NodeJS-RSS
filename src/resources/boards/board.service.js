@@ -1,15 +1,40 @@
 const boardRepo = require('./board.memory.repository');
 const Board = require('./board.model');
 
-const getAll = () => boardRepo.getAll();
+/**
+ * Get all boards
+ * @returns Promise<Array<IBoard>> - Get all boards
+ */
+const getAll = async () => boardRepo.getAll();
 
-const addBoard = (board) => boardRepo.addBoard(new Board(board));
+/**
+ * Add a board
+ * @param {IBoard} board - It's a new board
+ * @returns Promise<void>
+ */
+const addBoard = async (board) => boardRepo.addBoard(new Board(board));
 
-const removeBoard = (id) => boardRepo.removeBoard(id);
+/**
+ * Delete a board
+ * @param {string} id - Id of the board
+ * @returns Promise<IBoard> - Remote board
+ */
+const removeBoard = async (id) => boardRepo.removeBoard(id);
 
-const getBoard = (id) => boardRepo.getBoard(id);
+/**
+ * Get a board
+ * @param {string} id - Id of the board
+ * @returns {Promise<IBoard>} - Get board by id
+ */
+const getBoard = async (id) => boardRepo.getBoard(id);
 
-const updateBoard = (id, body) => boardRepo.updateBoard(id, body);
+/**
+ * Update the boardRepo
+ * @param {string} id - Id of the board
+ * @param {Partial<IBoard>} body - Optional board properties to update
+ * @returns {Promise<IBoard>} - Update the board
+ */
+const updateBoard = async (id, body) => boardRepo.updateBoard(id, body);
 
 module.exports = {
     getAll,
