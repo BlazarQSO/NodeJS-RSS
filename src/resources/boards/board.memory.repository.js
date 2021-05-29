@@ -40,7 +40,7 @@ const getBoard = async (id) => {
 };
 
 /**
- * Update the boardRepo
+ * Update the board
  * @param {string} id - Id of the board
  * @param {Partial<IBoard>} body - Optional board properties to update
  * @returns {Promise<IBoard>} - Update the board

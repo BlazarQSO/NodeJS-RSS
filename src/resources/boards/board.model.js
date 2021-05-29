@@ -22,29 +22,29 @@ const faker = require('faker');
  */
 class Board {
   /**
-    * Create a Board.
+    * Create a Board - constructor.
     * @param {IBoard} IBoard - Information about the board
   */
   constructor({
-    /**
-     * @property {string} id - Id of the board
-     */
     id = faker.datatype.uuid(),
-    /**
-     * @property {string} title - Title of the board
-     */
     title = faker.name.title(),
-    /**
-     * @property {Array<IColumn>} columns - Columns of the board
-     */
     columns = [{
       id: faker.datatype.uuid(),
       title: faker.name.title(),
       order: faker.datatype.number(),
     }],
   } = {}) {
+    /**
+     * @property {string} id - Id of the board
+     */
     this.id = id;
+    /**
+     * @property {string} title - Title of the board
+     */
     this.title = title;
+    /**
+     * @property {Array<IColumn>} columns - Columns of the board
+     */
     this.columns = columns;
   }
 }

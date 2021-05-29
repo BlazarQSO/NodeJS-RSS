@@ -1,15 +1,40 @@
 const usersRepo = require('./user.memory.repository');
 const User = require('./user.model');
 
-const getAll = () => usersRepo.getAll();
+/**
+ * Get all Users
+ * @returns Promise<Array<IUser>> - Get all users
+ */
+const getAll = async () => usersRepo.getAll();
 
-const addUser = (user) => usersRepo.addUser(new User(user));
+/**
+ * Add a user
+ * @param {IUser} user - It's a new user
+ * @returns Promise<void>
+ */
+const addUser = async (user) => usersRepo.addUser(new User(user));
 
-const removeUser = (id) => usersRepo.removeUser(id);
+/**
+ * Delete a user
+ * @param {string} id - Id of the user
+ * @returns Promise<IUser> - Remote user
+ */
+const removeUser = async (id) => usersRepo.removeUser(id);
 
-const getUser = (id) => usersRepo.getUser(id);
+/**
+ * Get a user
+ * @param {string} id - Id of the user
+ * @returns {Promise<IUser>} - Get user by id
+ */
+const getUser = async (id) => usersRepo.getUser(id);
 
-const updateUser = (id, body) => usersRepo.updateUser(id, body);
+/**
+ * Update the user
+ * @param {string} id - Id of the user
+ * @param {Partial<IUser>} body - Optional user properties to update
+ * @returns {Promise<IUser>} - Update the user
+ */
+const updateUser = async (id, body) => usersRepo.updateUser(id, body);
 
 module.exports = {
     getAll,

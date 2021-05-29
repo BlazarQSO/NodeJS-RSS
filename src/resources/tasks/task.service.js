@@ -1,15 +1,40 @@
 const taskRepo = require('./task.memory.repository');
 const Task = require('./task.model');
 
-const getAll = () => taskRepo.getAll();
+/**
+ * Get all tasks
+ * @returns Promise<Array<ITask>> - Get all tasks
+ */
+const getAll = async () => taskRepo.getAll();
 
-const addTask = (task) => taskRepo.addTask(new Task(task));
+/**
+ * Add a task
+ * @param {ITask} task - It's a new task
+ * @returns Promise<void>
+ */
+const addTask = async (task) => taskRepo.addTask(new Task(task));
 
-const removeTask = (id) => taskRepo.removeTask(id);
+/**
+ * Delete a task
+ * @param {string} id - Id of the task
+ * @returns Promise<ITask> - Remote task
+ */
+const removeTask = async (id) => taskRepo.removeTask(id);
 
-const getTask = (id) => taskRepo.getTask(id);
+/**
+ * Get a task
+ * @param {string} id - Id of the task
+ * @returns {Promise<ITask>} - Get task by id
+ */
+const getTask = async (id) => taskRepo.getTask(id);
 
-const updateTask = (id, body) => taskRepo.updateTask(id, body);
+/**
+ * Update the task
+ * @param {string} id - Id of the task
+ * @param {Partial<ITask>} body - Optional task properties to update
+ * @returns {Promise<ITask>} - Update the task
+ */
+const updateTask = async (id, body) => taskRepo.updateTask(id, body);
 
 module.exports = {
     getAll,

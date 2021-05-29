@@ -1,5 +1,4 @@
 {
-    "plugins": [],
     "recurseDepth": 10,
     "opts": {
         "recurse": true,
@@ -15,6 +14,7 @@
         "allowUnknownTags": true,
         "dictionaries": [ "jsdoc", "closure" ]
     },
+    "plugins": ["jsdoc-route-plugin"],
     "templates": {
         "cleverLinks": false,
         "monospaceLinks": false
