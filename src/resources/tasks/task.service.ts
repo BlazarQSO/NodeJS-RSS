@@ -1,12 +1,12 @@
-const taskRepo = require('./task.memory.repository');
-const Task = require('./task.model');
+import * as taskRepo from './task.memory.repository';
+import { ITask, Task } from './task.model';
 
 /**
  * Service | Get all tasks
  * @returns {Promise<Array<ITask>>} - Get all tasks
  * @category TaskService
  */
-const getAll = async () => taskRepo.getAll();
+const getAll = async (): Promise<Array<ITask>> => taskRepo.getAll();
 
 /**
  * Service | Add a task
@@ -14,7 +14,7 @@ const getAll = async () => taskRepo.getAll();
  * @returns {Promise<ITask>}
  * @category TaskService
  */
-const addTask = async (task) => taskRepo.addTask(new Task(task));
+const addTask = async (task: ITask): Promise<ITask> => taskRepo.addTask(new Task(task));
 
 /**
  * Service | Delete a task
@@ -22,7 +22,7 @@ const addTask = async (task) => taskRepo.addTask(new Task(task));
  * @returns {Promise<ITask>} - Remote task
  * @category TaskService
  */
-const removeTask = async (id) => taskRepo.removeTask(id);
+const removeTask = async (id: string): Promise<ITask> => taskRepo.removeTask(id);
 
 /**
  * Service | Get a task
@@ -30,7 +30,7 @@ const removeTask = async (id) => taskRepo.removeTask(id);
  * @returns {Promise<ITask>} - Get task by id
  * @category TaskService
  */
-const getTask = async (id) => taskRepo.getTask(id);
+const getTask = async (id: string): Promise<ITask> => taskRepo.getTask(id);
 
 /**
  * Service | Update the task
@@ -39,12 +39,6 @@ const getTask = async (id) => taskRepo.getTask(id);
  * @returns {Promise<ITask>} - Update the task
  * @category TaskService
  */
-const updateTask = async (id, body) => taskRepo.updateTask(id, body);
+const updateTask = async (id: string, body: Partial<ITask>): Promise<ITask> => taskRepo.updateTask(id, body);
 
-module.exports = {
-    getAll,
-    addTask,
-    removeTask,
-    getTask,
-    updateTask,
-};
+export { getAll, addTask, removeTask, getTask, updateTask };

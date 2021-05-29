@@ -21,7 +21,6 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "prettier",
         "import"
     ],
     "settings": {
@@ -37,5 +36,14 @@
         }
     },
     "rules": {
+        "import/extensions": "off",
+        "no-param-reassign": "off",
+        "lines-between-class-members": [
+            "error",
+            "always",
+            {
+                "exceptAfterSingleLine": true
+            }
+        ]
     }
 }

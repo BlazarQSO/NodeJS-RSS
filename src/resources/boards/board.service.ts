@@ -1,12 +1,12 @@
-const boardRepo = require('./board.memory.repository');
-const Board = require('./board.model');
+import * as boardRepo from './board.memory.repository';
+import { Board, IBoard } from './board.model';
 
 /**
  * Service | Get all boards
  * @returns {Promise<Array<IBoard>>} - Get all boards
  * @category BoardService
  */
-const getAll = async () => boardRepo.getAll();
+const getAll = async (): Promise<Array<IBoard>> => boardRepo.getAll();
 
 /**
  * Service | Add a board
@@ -14,7 +14,7 @@ const getAll = async () => boardRepo.getAll();
  * @returns {Promise<IBoard>}
  * @category BoardService
  */
-const addBoard = async (board) => boardRepo.addBoard(new Board(board));
+const addBoard = async (board: IBoard): Promise<IBoard> => boardRepo.addBoard(new Board(board));
 
 /**
  * Service | Delete a board
@@ -22,7 +22,7 @@ const addBoard = async (board) => boardRepo.addBoard(new Board(board));
  * @returns {Promise<IBoard>} - Remote board
  * @category BoardService
  */
-const removeBoard = async (id) => boardRepo.removeBoard(id);
+const removeBoard = async (id: string): Promise<IBoard> => boardRepo.removeBoard(id);
 
 /**
  * Service | Get a board
@@ -30,7 +30,7 @@ const removeBoard = async (id) => boardRepo.removeBoard(id);
  * @returns {Promise<IBoard>} - Get board by id
  * @category BoardService
  */
-const getBoard = async (id) => boardRepo.getBoard(id);
+const getBoard = async (id: string): Promise<IBoard> => boardRepo.getBoard(id);
 
 /**
  * Service | Update the board
@@ -39,12 +39,6 @@ const getBoard = async (id) => boardRepo.getBoard(id);
  * @returns {Promise<IBoard>} - Update the board
  * @category BoardService
  */
-const updateBoard = async (id, body) => boardRepo.updateBoard(id, body);
+const updateBoard = async (id: string, body: Partial<IBoard>): Promise<IBoard> => boardRepo.updateBoard(id, body);
 
-module.exports = {
-    getAll,
-    addBoard,
-    removeBoard,
-    getBoard,
-    updateBoard,
-};
+export { getAll, addBoard, removeBoard, getBoard, updateBoard };

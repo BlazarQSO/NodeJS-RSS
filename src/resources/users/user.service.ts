@@ -1,12 +1,12 @@
-const usersRepo = require('./user.memory.repository');
-const User = require('./user.model');
+import * as usersRepo from './user.memory.repository';
+import { IUser, User } from './user.model';
 
 /**
  * Service | Get all Users
  * @returns {Promise<Array<IUser>>} - Get all users
  * @category UserService
  */
-const getAll = async () => usersRepo.getAll();
+const getAll = async (): Promise<Array<IUser>> => usersRepo.getAll();
 
 /**
  * Service | Add a user
@@ -14,7 +14,7 @@ const getAll = async () => usersRepo.getAll();
  * @returns {Promise<IUser>} - Return a new user
  * @category UserService
  */
-const addUser = async (user) => usersRepo.addUser(new User(user));
+const addUser = async (user: IUser): Promise<IUser> => usersRepo.addUser(new User(user));
 
 /**
  * Service | Delete a user
@@ -22,7 +22,7 @@ const addUser = async (user) => usersRepo.addUser(new User(user));
  * @returns {Promise<IUser>} - Remote user
  * @category UserService
  */
-const removeUser = async (id) => usersRepo.removeUser(id);
+const removeUser = async (id: string): Promise<IUser> => usersRepo.removeUser(id);
 
 /**
  * Service | Get a user
@@ -30,7 +30,7 @@ const removeUser = async (id) => usersRepo.removeUser(id);
  * @returns {Promise<IUser>} - Get user by id
  * @category UserService
  */
-const getUser = async (id) => usersRepo.getUser(id);
+const getUser = async (id: string): Promise<IUser> => usersRepo.getUser(id);
 
 /**
  * Service | Update the user
@@ -39,12 +39,6 @@ const getUser = async (id) => usersRepo.getUser(id);
  * @returns {Promise<IUser>} - Update the user
  * @category UserService
  */
-const updateUser = async (id, body) => usersRepo.updateUser(id, body);
+const updateUser = async (id: string, body: Partial<IUser>): Promise<IUser> => usersRepo.updateUser(id, body);
 
-module.exports = {
-    getAll,
-    addUser,
-    removeUser,
-    getUser,
-    updateUser,
-};
+export { getAll, addUser, removeUser, getUser, updateUser };
