@@ -11,7 +11,7 @@ const getAll = async () => usersRepo.getAll();
 /**
  * Service | Add a user
  * @param {IUser} user - It's a new user
- * @returns {Promise<void>}
+ * @returns {Promise<IUser>} - Return a new user
  * @category UserService
  */
 const addUser = async (user) => usersRepo.addUser(new User(user));

@@ -14,11 +14,12 @@ const getAll = async () => {
 /**
  * Repo | Add a board
  * @param {IBoard} board - It's a new board
- * @returns {Promise<void>}
+ * @returns {Promise<IBoard>}
  * @category BoardRepo
  */
 const addBoard = async (board) => {
-  await db.addItem(board, BD_TABLE_BOARDS);
+  const newBoard = await db.addItem(board, BD_TABLE_BOARDS);
+  return newBoard;
 };
 
 /**

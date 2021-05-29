@@ -11,7 +11,7 @@ const getAll = async () => taskRepo.getAll();
 /**
  * Service | Add a task
  * @param {ITask} task - It's a new task
- * @returns {Promise<void>}
+ * @returns {Promise<ITask>}
  * @category TaskService
  */
 const addTask = async (task) => taskRepo.addTask(new Task(task));

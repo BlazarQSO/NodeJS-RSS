@@ -14,11 +14,12 @@ const getAll = async () => {
 /**
  * Repo | Add a task
  * @param {ITask} task - It's a new task
- * @returns {Promise<void>}
+ * @returns {Promise<ITask>}
  * @category TaskRepo
  */
 const addTask = async (task) => {
-  await db.addItem(task, BD_TABLE_TASKS);
+  const newTask = await db.addItem(task, BD_TABLE_TASKS);
+  return newTask;
 };
 
 /**

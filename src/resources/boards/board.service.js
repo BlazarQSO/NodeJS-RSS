@@ -11,7 +11,7 @@ const getAll = async () => boardRepo.getAll();
 /**
  * Service | Add a board
  * @param {IBoard} board - It's a new board
- * @returns {Promise<void>}
+ * @returns {Promise<IBoard>}
  * @category BoardService
  */
 const addBoard = async (board) => boardRepo.addBoard(new Board(board));

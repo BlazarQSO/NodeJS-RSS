@@ -64,6 +64,7 @@ class Database {
     */
     addItem(item, table) {
         this[table].push(item);
+        return item;
     }
 
     /**
