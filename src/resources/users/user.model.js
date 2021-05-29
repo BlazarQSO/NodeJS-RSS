@@ -42,6 +42,12 @@ class User {
     this.password = password;
   }
 
+  /**
+   * Strip password
+   * @property {Function} toResponse - Strip password from the user
+   * @param {IUser} user - Current user
+   * @returns {{id: string, name: string, login: string}}
+   */
   static toResponse(user) {
     const { id, name, login } = user;
     return { id, name, login };

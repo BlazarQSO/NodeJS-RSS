@@ -2,11 +2,13 @@
     "recurseDepth": 10,
     "opts": {
         "recurse": true,
-        "destination": "./docs/"
+        "destination": "./docs/",
+        "template": "node_modules/better-docs",
+        "readme": "./README.md"
     },
     "source": {
         "include": [ "src" ],
-        "includePattern": ".+\\.js(doc|x)?$",
+        "includePattern": "\\.(jsx|js|ts|tsx)$",
         "excludePattern": "(node_modules/|docs)"
     },
     "sourceType": "module",
@@ -14,7 +16,11 @@
         "allowUnknownTags": true,
         "dictionaries": [ "jsdoc", "closure" ]
     },
-    "plugins": ["jsdoc-route-plugin"],
+    "plugins": [
+        "jsdoc-route-plugin",
+        "node_modules/better-docs/typescript",
+        "node_modules/better-docs/category"
+    ],
     "templates": {
         "cleverLinks": false,
         "monospaceLinks": false

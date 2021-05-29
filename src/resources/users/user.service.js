@@ -2,37 +2,42 @@ const usersRepo = require('./user.memory.repository');
 const User = require('./user.model');
 
 /**
- * Get all Users
- * @returns Promise<Array<IUser>> - Get all users
+ * Service | Get all Users
+ * @returns {Promise<Array<IUser>>} - Get all users
+ * @category UserService
  */
 const getAll = async () => usersRepo.getAll();
 
 /**
- * Add a user
+ * Service | Add a user
  * @param {IUser} user - It's a new user
- * @returns Promise<void>
+ * @returns {Promise<void>}
+ * @category UserService
  */
 const addUser = async (user) => usersRepo.addUser(new User(user));
 
 /**
- * Delete a user
+ * Service | Delete a user
  * @param {string} id - Id of the user
- * @returns Promise<IUser> - Remote user
+ * @returns {Promise<IUser>} - Remote user
+ * @category UserService
  */
 const removeUser = async (id) => usersRepo.removeUser(id);
 
 /**
- * Get a user
+ * Service | Get a user
  * @param {string} id - Id of the user
  * @returns {Promise<IUser>} - Get user by id
+ * @category UserService
  */
 const getUser = async (id) => usersRepo.getUser(id);
 
 /**
- * Update the user
+ * Service | Update the user
  * @param {string} id - Id of the user
  * @param {Partial<IUser>} body - Optional user properties to update
  * @returns {Promise<IUser>} - Update the user
+ * @category UserService
  */
 const updateUser = async (id, body) => usersRepo.updateUser(id, body);
 

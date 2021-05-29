@@ -3,9 +3,10 @@ const boardService = require('./board.service');
 const { STATUS_CODE } = require('../../const');
 
 /**
- * Get all boards
- * @name Get all boards
+ * Router | Get all boards
+ * @name Router - Get all boards
  * @route {GET} /boards/
+ * @category BoardRouter
  */
 router.route('/').get(async (req, res) => {
   const boards = await boardService.getAll();
@@ -13,9 +14,10 @@ router.route('/').get(async (req, res) => {
 });
 
 /**
- * Add a board
- * @name Add a board
+ * Router | Add a board
+ * @name Router - Add a board
  * @route {POST} /boards/
+ * @category BoardRouter
  */
 router.route('/').post(async (req, res) => {
   const board = await boardService.addBoard(req.body);
@@ -23,9 +25,10 @@ router.route('/').post(async (req, res) => {
 });
 
 /**
- * Delete a board
- * @name Delete a board by id
+ * Router | Delete a board
+ * @name Router - Delete a board by id
  * @route {DELETE} /boards/:id
+ * @category BoardRouter
  */
 router.route('/:id').delete(async (req, res) => {
   await boardService.removeBoard(req.params.id);
@@ -33,9 +36,10 @@ router.route('/:id').delete(async (req, res) => {
 });
 
 /**
- * Get a board
- * @name Get a board by id
+ * Router | Get a board
+ * @name Router - Get a board by id
  * @route {GET} /boards/:id
+ * @category BoardRouter
  */
 router.route('/:id').get(async (req, res) => {
   const board = await boardService.getBoard(req.params.id);
@@ -47,9 +51,10 @@ router.route('/:id').get(async (req, res) => {
 });
 
 /**
- * Update a board
- * @name Update a board by id
+ * Router | Update a board
+ * @name Router - Update a board by id
  * @route {PUT} /boards/:id
+ * @category BoardRouter
  */
 router.route('/:id').put(async (req, res) => {
   const board = await boardService.updateBoard(req.params.id, req.body);

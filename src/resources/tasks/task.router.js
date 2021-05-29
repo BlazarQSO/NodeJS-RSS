@@ -3,9 +3,10 @@ const taskService = require('./task.service');
 const { STATUS_CODE } = require('../../const');
 
 /**
- * Get all tasks
- * @name Get all tasks
+ * Router | Get all tasks
+ * @name Router - Get all tasks
  * @route {GET} /boards/:boardId/tasks/
+ * @category TaskRouter
  */
 router.route('/').get(async (req, res) => {
   const tasks = await taskService.getAll();
@@ -13,9 +14,10 @@ router.route('/').get(async (req, res) => {
 });
 
 /**
- * Add a task
- * @name Add a task
+ * Router | Add a task
+ * @name Router - Add a task
  * @route {POST} /boards/:boardId/tasks/
+ * @category TaskRouter
  */
 router.route('/').post(async (req, res) => {
   if (req.params.boardId) {
@@ -26,9 +28,10 @@ router.route('/').post(async (req, res) => {
 });
 
 /**
- * Delete a task
- * @name Delete a task by id
+ * Router | Delete a task
+ * @name Router - Delete a task by id
  * @route {DELETE} /boards/:boardId/tasks/:id
+ * @category TaskRouter
  */
 router.route('/:id').delete(async (req, res) => {
   await taskService.removeTask(req.params.id);
@@ -36,9 +39,10 @@ router.route('/:id').delete(async (req, res) => {
 });
 
 /**
- * Get a task
- * @name Get a task by id
+ * Router | Get a task
+ * @name Router - Get a task by id
  * @route {GET} /boards/:boardId/tasks/:id
+ * @category TaskRouter
  */
 router.route('/:id').get(async (req, res) => {
   const task = await taskService.getTask(req.params.id);
@@ -50,9 +54,10 @@ router.route('/:id').get(async (req, res) => {
 });
 
 /**
- * Update a task
- * @name Update a task by id
+ * Router | Update a task
+ * @name Router - Update a task by id
  * @route {PUT} /boards/:boardId/tasks/:id
+ * @category TaskRouter
  */
 router.route('/:id').put(async (req, res) => {
   const task = await taskService.updateTask(req.params.id, req.body);

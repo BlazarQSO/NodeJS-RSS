@@ -1,21 +1,25 @@
 /**
  * Default count users
  * @type {number}
+ * @category Constants
  */
 const DEFAULT_COUNT_USERS = 5;
 /**
  * DB table users
  * @type {string}
+ * @category Constants
  */
 const BD_TABLE_USERS = 'Users';
 /**
  * DB table boards
  * @type {string}
+ * @category Constants
  */
 const BD_TABLE_BOARDS = 'Boards';
 /**
  * DB table tasks
  * @type {string}
+ * @category Constants
  */
 const BD_TABLE_TASKS = 'Tasks';
 
@@ -27,6 +31,7 @@ const BD_TABLE_TASKS = 'Tasks';
  * @property {number} NO_CONTENT - No Content
  * @property {number} NOT_FOUND - Not Found
  * @property {number} INTERNAL_SERVER_ERROR - Internal Server Error
+ * @category Constants
  */
 const STATUS_CODE = {
     OK: 200,
