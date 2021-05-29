@@ -10,6 +10,14 @@ const faker = require('faker');
 */
 
 /**
+ * User Interface without password
+ * @typedef IUserStrip
+ * @property {string} id - Id of the user
+ * @property {string} name - Name of the user
+ * @property {string} login - Login of the user
+*/
+
+/**
  * Creates a new User.
  * @class
  */
@@ -46,7 +54,7 @@ class User {
    * Strip password
    * @property {Function} toResponse - Strip password from the user
    * @param {IUser} user - Current user
-   * @returns {{id: string, name: string, login: string}}
+   * @returns {IUserStrip} - User without password
    */
   static toResponse(user) {
     const { id, name, login } = user;
