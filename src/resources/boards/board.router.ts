@@ -46,7 +46,7 @@ router.route('/:id').delete(async (req, res) => {
 router.route('/:id').get(async (req, res) => {
     const board = await boardService.getBoard(req.params.id);
     if (board) {
-        await res.status(STATUS_CODE.OK).send(board);
+        res.status(STATUS_CODE.OK).send(board);
     } else {
         res.sendStatus(STATUS_CODE.NOT_FOUND);
     }
