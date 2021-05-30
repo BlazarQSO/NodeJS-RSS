@@ -3,7 +3,7 @@
  * @type {number}
  * @category Constants
  */
-const DEFAULT_COUNT_USERS = 5;
+const DEFAULT_COUNT_USERS = 3;
 /**
  * DB table users
  * @type {string}

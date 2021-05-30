@@ -1,4 +1,3 @@
-import faker from 'faker';
 import { IUser, User } from '../resources/users/user.model';
 import { IBoard, Board } from '../resources/boards/board.model';
 import { ITask, Task } from '../resources/tasks/task.model';
@@ -50,18 +49,14 @@ class Database {
      */
     initDatabase(count: number) {
         for (let i = 0; i < count; i += 1) {
-            this.Users.push(new User());
-            this.Boards.push(new Board());
+            this.Users.push(new User({} as IUser));
+            this.Boards.push(new Board({} as IBoard));
             this.Tasks.push(
                 new Task({
-                    id: faker.datatype.uuid(),
-                    title: faker.name.title(),
-                    order: faker.datatype.number(),
-                    description: faker.commerce.productDescription(),
                     userId: this.Users[i]?.id || null,
                     boardId: this.Boards[i]?.id || null,
                     columnId: this.Boards[i]?.columns[0]?.id || null,
-                })
+                } as ITask)
             );
         }
     }

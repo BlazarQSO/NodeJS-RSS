@@ -38,17 +38,15 @@ export class Task {
      * Create a Task - constructor
      * @param {ITask} ITask - Information about the task
      */
-    constructor(
-        { id, title, order, description, userId, boardId, columnId }: ITask = {
-            id: faker.datatype.uuid(),
-            title: faker.name.title(),
-            order: faker.datatype.number(),
-            description: faker.commerce.productDescription(),
-            userId: null,
-            boardId: faker.datatype.uuid(),
-            columnId: faker.datatype.uuid(),
-        }
-    ) {
+    constructor({
+        id = faker.datatype.uuid(),
+        title = faker.name.title(),
+        order = faker.datatype.number(),
+        description = faker.commerce.productDescription(),
+        userId = null,
+        boardId = faker.datatype.uuid(),
+        columnId = faker.datatype.uuid(),
+    }: ITask) {
         /**
          * @property {string} id - Task id
          */

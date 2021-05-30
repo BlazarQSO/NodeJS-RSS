@@ -39,19 +39,17 @@ export class Board {
      * Create a Board - constructor.
      * @param {IBoard} IBoard - Information about the board
      */
-    constructor(
-        { id, title, columns }: IBoard = {
-            id: faker.datatype.uuid(),
-            title: faker.name.title(),
-            columns: [
-                {
-                    id: faker.datatype.uuid(),
-                    title: faker.name.title(),
-                    order: faker.datatype.number(),
-                },
-            ],
-        }
-    ) {
+    constructor({
+        id = faker.datatype.uuid(),
+        title = faker.name.title(),
+        columns = [
+            {
+                id: faker.datatype.uuid(),
+                title: faker.name.title(),
+                order: faker.datatype.number(),
+            },
+        ],
+    }: IBoard) {
         /**
          * @property {string} id - Id of the board
          */

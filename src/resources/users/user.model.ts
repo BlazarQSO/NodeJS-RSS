@@ -42,14 +42,12 @@ export class User {
      * Create a User - constructor.
      * @param {IUser} IUser - Information about the user
      */
-    constructor(
-        { id, name, login, password }: IUser = {
-            id: faker.datatype.uuid(),
-            name: faker.name.findName(),
-            login: faker.internet.userName(),
-            password: faker.internet.password(),
-        }
-    ) {
+    constructor({
+        id = faker.datatype.uuid(),
+        name = faker.name.findName(),
+        login = faker.internet.userName(),
+        password = faker.internet.password(),
+    }: IUser) {
         /**
          * @property {string} id - User id
          */
