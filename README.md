@@ -1,5 +1,7 @@
 # RS School REST service
 
+## Task 4: JSDoc and Typescript
+
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
@@ -70,3 +72,11 @@ npm run lint
 Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+
+### Create jsdoc
+
+```
+npm run doc
+```
+---
+### Author
