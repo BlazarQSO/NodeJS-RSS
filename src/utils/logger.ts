@@ -12,8 +12,7 @@ export const logger = createLogger({
         }),
         new transports.File({
             filename: `${__dirname}/../../logs/info.log`,
-            level: 'info',
-            format: format.combine(format.uncolorize(), format.json()),
+            format: format.printf((info) => `${new Date().toISOString()} ${info.message}`),
         }),
     ],
 });
