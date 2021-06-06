@@ -46,7 +46,11 @@ router.route('/:id').delete(async (req, res) => {
  */
 router.route('/:id').get(async (req, res) => {
     const user = await usersService.getUser(req.params.id);
-    res.status(STATUS_CODE.OK).send(User.toResponse(user));
+    if (user) {
+        res.status(STATUS_CODE.OK).send(User.toResponse(user));
+    } else {
+        res.sendStatus(STATUS_CODE.NOT_FOUND);
+    }
 });
 
 /**
@@ -57,7 +61,11 @@ router.route('/:id').get(async (req, res) => {
  */
 router.route('/:id').put(async (req, res) => {
     const user = await usersService.updateUser(req.params.id, req.body);
-    res.status(STATUS_CODE.OK).send(User.toResponse(user));
+    if (user) {
+        res.status(STATUS_CODE.OK).send(User.toResponse(user));
+    } else {
+        res.sendStatus(STATUS_CODE.NOT_FOUND);
+    }
 });
 
 export default router;

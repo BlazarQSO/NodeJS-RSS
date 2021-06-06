@@ -1,6 +1,8 @@
 import { db } from '../../database/index';
-import { BD_TABLE_USERS } from '../../const';
+import { BD_TABLE_USERS, STATUS_CODE } from '../../const';
 import { IUser } from './user.model';
+import { ApiError } from '../../utils/apiError';
+import { logger } from '../../utils/logger';
 
 /**
  * Repo | Get all users
@@ -29,9 +31,17 @@ const addUser = async (user: IUser): Promise<IUser> => {
  * @returns {Promise<IUser>} - Remote user
  * @category UserRepo
  */
-const removeUser = async (id: string): Promise<IUser> => {
-    const user = (await db.removeItem(id, BD_TABLE_USERS)) as IUser;
-    return user;
+const removeUser = async (id: string): Promise<IUser | undefined> => {
+    try {
+        const user = (await db.removeItem(id, BD_TABLE_USERS)) as IUser;
+        if (!user) {
+            throw new ApiError(`The user with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
+        }
+        return user;
+    } catch (err) {
+        logger.error(err.message);
+    }
+    return undefined;
 };
 
 /**
@@ -40,9 +50,17 @@ const removeUser = async (id: string): Promise<IUser> => {
  * @returns {Promise<IUser>} - Get user by id
  * @category UserRepo
  */
-const getUser = async (id: string): Promise<IUser> => {
-    const user = (await db.getItem(id, BD_TABLE_USERS)) as IUser;
-    return user;
+const getUser = async (id: string): Promise<IUser | undefined> => {
+    try {
+        const user = (await db.getItem(id, BD_TABLE_USERS)) as IUser;
+        if (!user) {
+            throw new ApiError(`The user with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
+        }
+        return user;
+    } catch (err) {
+        logger.error(err.message);
+    }
+    return undefined;
 };
 
 /**
@@ -52,9 +70,14 @@ const getUser = async (id: string): Promise<IUser> => {
  * @returns {Promise<IUser>} - Update the user
  * @category UserRepo
  */
-const updateUser = async (id: string, body: Partial<IUser>): Promise<IUser> => {
-    const user = (await db.updateItem(id, body, BD_TABLE_USERS)) as IUser;
-    return user;
+const updateUser = async (id: string, body: Partial<IUser>): Promise<IUser | undefined> => {
+    try {
+        const user = (await db.updateItem(id, body, BD_TABLE_USERS)) as IUser;
+        return user;
+    } catch (err) {
+        logger.error(err.message);
+    }
+    return undefined;
 };
 
 export { getAll, addUser, removeUser, getUser, updateUser };

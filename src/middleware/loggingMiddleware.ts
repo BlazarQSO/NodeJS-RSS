@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { finished } from 'stream';
-import { logger } from './logger';
+import { logger } from '../utils/logger';
 
 export const logging = (req: Request, res: Response, next: NextFunction): void => {
     const { method, url, params, query, body } = req;

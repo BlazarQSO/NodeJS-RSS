@@ -22,7 +22,7 @@ const addUser = async (user: IUser): Promise<IUser> => usersRepo.addUser(new Use
  * @returns {Promise<IUser>} - Remote user
  * @category UserService
  */
-const removeUser = async (id: string): Promise<IUser> => usersRepo.removeUser(id);
+const removeUser = async (id: string): Promise<IUser | undefined> => usersRepo.removeUser(id);
 
 /**
  * Service | Get a user
@@ -30,7 +30,7 @@ const removeUser = async (id: string): Promise<IUser> => usersRepo.removeUser(id
  * @returns {Promise<IUser>} - Get user by id
  * @category UserService
  */
-const getUser = async (id: string): Promise<IUser> => usersRepo.getUser(id);
+const getUser = async (id: string): Promise<IUser | undefined> => usersRepo.getUser(id);
 
 /**
  * Service | Update the user
@@ -39,6 +39,7 @@ const getUser = async (id: string): Promise<IUser> => usersRepo.getUser(id);
  * @returns {Promise<IUser>} - Update the user
  * @category UserService
  */
-const updateUser = async (id: string, body: Partial<IUser>): Promise<IUser> => usersRepo.updateUser(id, body);
+const updateUser = async (id: string, body: Partial<IUser>): Promise<IUser | undefined> =>
+    usersRepo.updateUser(id, body);
 
 export { getAll, addUser, removeUser, getUser, updateUser };
