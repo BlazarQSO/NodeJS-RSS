@@ -60,7 +60,11 @@ router.route('/:id').get(async (req, res) => {
  */
 router.route('/:id').put(async (req, res) => {
     const board = await boardService.updateBoard(req.params.id, req.body);
-    res.status(STATUS_CODE.OK).send(board);
+    if (board) {
+        res.status(STATUS_CODE.OK).send(board);
+    } else {
+        res.sendStatus(STATUS_CODE.NOT_FOUND);
+    }
 });
 
 export default router;

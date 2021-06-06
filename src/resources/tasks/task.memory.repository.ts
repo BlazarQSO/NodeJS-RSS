@@ -1,6 +1,8 @@
 import { db } from '../../database';
-import { BD_TABLE_TASKS } from '../../const';
+import { BD_TABLE_TASKS, STATUS_CODE } from '../../const';
 import { ITask } from './task.model';
+import { ApiError } from '../../utils/apiError';
+import { logger } from '../../utils/logger';
 
 /**
  * Repo | Get all tasks
@@ -29,9 +31,17 @@ const addTask = async (task: ITask): Promise<ITask> => {
  * @returns {Promise<ITask>} - Remote task
  * @category TaskRepo
  */
-const removeTask = async (id: string): Promise<ITask> => {
-    const task = (await db.removeItem(id, BD_TABLE_TASKS)) as ITask;
-    return task;
+const removeTask = async (id: string): Promise<ITask | undefined> => {
+    try {
+        const task = (await db.removeItem(id, BD_TABLE_TASKS)) as ITask;
+        if (!task) {
+            throw new ApiError(`The task with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
+        }
+        return task;
+    } catch (err) {
+        logger.error(err.message);
+    }
+    return undefined;
 };
 
 /**
@@ -40,9 +50,17 @@ const removeTask = async (id: string): Promise<ITask> => {
  * @returns {Promise<ITask>} - Get task by id
  * @category TaskRepo
  */
-const getTask = async (id: string): Promise<ITask> => {
-    const task = (await db.getItem(id, BD_TABLE_TASKS)) as ITask;
-    return task;
+const getTask = async (id: string): Promise<ITask | undefined> => {
+    try {
+        const task = (await db.getItem(id, BD_TABLE_TASKS)) as ITask;
+        if (!task) {
+            throw new ApiError(`The task with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
+        }
+        return task;
+    } catch (err) {
+        logger.error(err.message);
+    }
+    return undefined;
 };
 
 /**
@@ -52,9 +70,17 @@ const getTask = async (id: string): Promise<ITask> => {
  * @returns {Promise<ITask>} - Update the task
  * @category TaskRepo
  */
-const updateTask = async (id: string, body: Partial<ITask>): Promise<ITask> => {
-    const task = (await db.updateItem(id, body, BD_TABLE_TASKS)) as ITask;
-    return task;
+const updateTask = async (id: string, body: Partial<ITask>): Promise<ITask | undefined> => {
+    try {
+        const task = (await db.updateItem(id, body, BD_TABLE_TASKS)) as ITask;
+        if (!task) {
+            throw new ApiError(`The task with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
+        }
+        return task;
+    } catch (err) {
+        logger.error(err.message);
+    }
+    return undefined;
 };
 
 export { getAll, addTask, removeTask, getTask, updateTask };
