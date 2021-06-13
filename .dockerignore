@@ -1,0 +1,10 @@
+node_modules
+build
+doc
+docs
+test
+.github
+.vscode
+.eslintrc.json
+.prettierrc
+.gitignore
