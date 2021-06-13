@@ -9,6 +9,7 @@ import { DEFAULT_COUNT_USERS, BD_TABLE_USERS, BD_TABLE_BOARDS, BD_TABLE_TASKS } 
  * @property {IUser|ITask|IBoard} item - Item of the database
  */
 type Item = IUser | ITask | IBoard;
+type Nullable<T> = T | null;
 
 type Tables = typeof BD_TABLE_USERS | typeof BD_TABLE_BOARDS | typeof BD_TABLE_TASKS;
 type Items = ITask & IBoard & IUser;
@@ -80,14 +81,14 @@ class Database {
      * @param {string} table - Table name of the database
      * @returns {Item}
      */
-    removeItem(id: string, table: string): Item {
+    removeItem(id: string, table: string): Nullable<Item> {
         if (this.foundItem(id, table)) {
             this[table as Tables] = (this[table as Tables] as Array<Item>).filter(
                 (item: Item) => item.id !== id
             ) as Array<Items>;
             this.removeDependencies(id, table);
         }
-        return this.foundItem(id, table);
+        return null;
     }
 
     /**
@@ -126,9 +127,13 @@ class Database {
      * @param {string} table - Table name of the database
      * @returns {Item} Found Item
      */
-    foundItem(id: string, table: string): Item {
+    foundItem(id: string, table: string): Nullable<Item> {
         const found = (this[table as Tables] as Array<Items>).find((item: Item) => item.id === id);
-        return found as Item;
+        if (found) {
+            return found as Item;
+        }
+
+        return null;
     }
 
     /**

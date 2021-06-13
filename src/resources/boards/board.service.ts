@@ -22,7 +22,7 @@ const addBoard = async (board: IBoard): Promise<IBoard> => boardRepo.addBoard(ne
  * @returns {Promise<IBoard>} - Remote board
  * @category BoardService
  */
-const removeBoard = async (id: string): Promise<IBoard> => boardRepo.removeBoard(id);
+const removeBoard = async (id: string): Promise<IBoard | undefined> => boardRepo.removeBoard(id);
 
 /**
  * Service | Get a board
@@ -30,7 +30,7 @@ const removeBoard = async (id: string): Promise<IBoard> => boardRepo.removeBoard
  * @returns {Promise<IBoard>} - Get board by id
  * @category BoardService
  */
-const getBoard = async (id: string): Promise<IBoard> => boardRepo.getBoard(id);
+const getBoard = async (id: string): Promise<IBoard | undefined> => boardRepo.getBoard(id);
 
 /**
  * Service | Update the board
@@ -39,6 +39,7 @@ const getBoard = async (id: string): Promise<IBoard> => boardRepo.getBoard(id);
  * @returns {Promise<IBoard>} - Update the board
  * @category BoardService
  */
-const updateBoard = async (id: string, body: Partial<IBoard>): Promise<IBoard> => boardRepo.updateBoard(id, body);
+const updateBoard = async (id: string, body: Partial<IBoard>): Promise<IBoard | undefined> =>
+    boardRepo.updateBoard(id, body);
 
 export { getAll, addBoard, removeBoard, getBoard, updateBoard };

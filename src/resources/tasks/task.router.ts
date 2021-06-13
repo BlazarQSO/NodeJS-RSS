@@ -69,7 +69,11 @@ router.route('/:id').get(async (req, res) => {
  */
 router.route('/:id').put(async (req, res) => {
     const task = await taskService.updateTask(req.params.id, req.body);
-    res.status(STATUS_CODE.OK).send(task);
+    if (task) {
+        res.status(STATUS_CODE.OK).send(task);
+    } else {
+        res.sendStatus(STATUS_CODE.NOT_FOUND);
+    }
 });
 
 export default router;

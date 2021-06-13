@@ -22,7 +22,7 @@ const addTask = async (task: ITask): Promise<ITask> => taskRepo.addTask(new Task
  * @returns {Promise<ITask>} - Remote task
  * @category TaskService
  */
-const removeTask = async (id: string): Promise<ITask> => taskRepo.removeTask(id);
+const removeTask = async (id: string): Promise<ITask | undefined> => taskRepo.removeTask(id);
 
 /**
  * Service | Get a task
@@ -30,7 +30,7 @@ const removeTask = async (id: string): Promise<ITask> => taskRepo.removeTask(id)
  * @returns {Promise<ITask>} - Get task by id
  * @category TaskService
  */
-const getTask = async (id: string): Promise<ITask> => taskRepo.getTask(id);
+const getTask = async (id: string): Promise<ITask | undefined> => taskRepo.getTask(id);
 
 /**
  * Service | Update the task
@@ -39,6 +39,7 @@ const getTask = async (id: string): Promise<ITask> => taskRepo.getTask(id);
  * @returns {Promise<ITask>} - Update the task
  * @category TaskService
  */
-const updateTask = async (id: string, body: Partial<ITask>): Promise<ITask> => taskRepo.updateTask(id, body);
+const updateTask = async (id: string, body: Partial<ITask>): Promise<ITask | undefined> =>
+    taskRepo.updateTask(id, body);
 
 export { getAll, addTask, removeTask, getTask, updateTask };

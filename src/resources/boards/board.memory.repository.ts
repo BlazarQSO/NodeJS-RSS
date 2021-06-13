@@ -1,6 +1,8 @@
 import { db } from '../../database';
-import { BD_TABLE_BOARDS } from '../../const';
+import { BD_TABLE_BOARDS, STATUS_CODE } from '../../const';
 import { IBoard } from './board.model';
+import { ApiError } from '../../utils/apiError';
+import { logger } from '../../utils/logger';
 
 /**
  * Repo | Get all boards
@@ -29,9 +31,17 @@ const addBoard = async (board: IBoard): Promise<IBoard> => {
  * @returns {Promise<IBoard>} - Remote board
  * @category BoardRepo
  */
-const removeBoard = async (id: string): Promise<IBoard> => {
-    const board = (await db.removeItem(id, BD_TABLE_BOARDS)) as IBoard;
-    return board;
+const removeBoard = async (id: string): Promise<IBoard | undefined> => {
+    try {
+        const board = (await db.removeItem(id, BD_TABLE_BOARDS)) as IBoard;
+        if (!board) {
+            throw new ApiError(`The board with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
+        }
+        return board;
+    } catch (err) {
+        logger.error(err.message);
+    }
+    return undefined;
 };
 
 /**
@@ -40,9 +50,17 @@ const removeBoard = async (id: string): Promise<IBoard> => {
  * @returns {Promise<IBoard>} - Get board by id
  * @category BoardRepo
  */
-const getBoard = async (id: string): Promise<IBoard> => {
-    const board = (await db.getItem(id, BD_TABLE_BOARDS)) as IBoard;
-    return board;
+const getBoard = async (id: string): Promise<IBoard | undefined> => {
+    try {
+        const board = (await db.getItem(id, BD_TABLE_BOARDS)) as IBoard;
+        if (!board) {
+            throw new ApiError(`The board with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
+        }
+        return board;
+    } catch (err) {
+        logger.error(err.message);
+    }
+    return undefined;
 };
 
 /**
@@ -52,9 +70,17 @@ const getBoard = async (id: string): Promise<IBoard> => {
  * @returns {Promise<IBoard>} - Update the board
  * @category BoardRepo
  */
-const updateBoard = async (id: string, body: Partial<IBoard>): Promise<IBoard> => {
-    const board = (await db.updateItem(id, body, BD_TABLE_BOARDS)) as IBoard;
-    return board;
+const updateBoard = async (id: string, body: Partial<IBoard>): Promise<IBoard | undefined> => {
+    try {
+        const board = (await db.updateItem(id, body, BD_TABLE_BOARDS)) as IBoard;
+        if (!board) {
+            throw new ApiError(`The board with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
+        }
+        return board;
+    } catch (err) {
+        logger.error(err.message);
+    }
+    return undefined;
 };
 
 export { getAll, addBoard, removeBoard, getBoard, updateBoard };
