@@ -1,0 +1,38 @@
+version: '3'
+services: 
+    node:
+        image: blazarqso/docker-basic
+        container_name: docker-basic
+        restart: always
+        build: .
+        ports:
+            - ${PORT}:${PORT} 
+        depends_on:
+            - postgres
+        volumes:
+            - ./logs:/usr/app/logs
+            - ./src:/usr/app/src            
+        environment:
+            PORT: ${PORT}
+        networks:
+            - my-network
+    postgres:
+        image: blazarqso/database
+        container_name: database
+        restart: always
+        build: ./database/
+        ports:
+            - ${POSTGRES_PORT}:${POSTGRES_PORT}
+        volumes:
+            - ./postgres_logs:/logs:z
+            - ./postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_DB: ${POSTGRES_DB}
+        networks:
+            - my-network
+
+networks:
+    my-network:
+        driver: bridge
