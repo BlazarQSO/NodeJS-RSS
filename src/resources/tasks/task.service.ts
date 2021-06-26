@@ -1,5 +1,5 @@
 import * as taskRepo from './task.memory.repository';
-import { ITask, Task } from './task.model';
+import { ITask } from '../../entities/task.entity';
 
 /**
  * Service | Get all tasks
@@ -14,7 +14,7 @@ const getAll = async (): Promise<Array<ITask>> => taskRepo.getAll();
  * @returns {Promise<ITask>}
  * @category TaskService
  */
-const addTask = async (task: ITask): Promise<ITask> => taskRepo.addTask(new Task(task));
+const addTask = async (task: ITask): Promise<ITask> => taskRepo.addTask(task);
 
 /**
  * Service | Delete a task

@@ -9,19 +9,19 @@ const DEFAULT_COUNT_USERS = 3;
  * @type {string}
  * @category Constants
  */
-const BD_TABLE_USERS = 'Users';
+const DB_TABLE_USERS = 'Users';
 /**
  * DB table boards
  * @type {string}
  * @category Constants
  */
-const BD_TABLE_BOARDS = 'Boards';
+const DB_TABLE_BOARDS = 'Boards';
 /**
  * DB table tasks
  * @type {string}
  * @category Constants
  */
-const BD_TABLE_TASKS = 'Tasks';
+const DB_TABLE_TASKS = 'Tasks';
 
 /**
  * Status code of HTTP requests
@@ -44,4 +44,4 @@ const STATUS_CODE = {
 
 export const INTERNAL_ERROR = 'something went wrong';
 
-export { DEFAULT_COUNT_USERS, BD_TABLE_USERS, BD_TABLE_BOARDS, BD_TABLE_TASKS, STATUS_CODE };
+export { DEFAULT_COUNT_USERS, DB_TABLE_USERS, DB_TABLE_BOARDS, DB_TABLE_TASKS, STATUS_CODE };

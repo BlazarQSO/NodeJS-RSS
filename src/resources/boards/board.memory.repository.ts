@@ -1,8 +1,5 @@
-import { db } from '../../database';
-import { BD_TABLE_BOARDS, STATUS_CODE } from '../../const';
-import { IBoard } from './board.model';
-import { ApiError } from '../../utils/apiError';
-import { logger } from '../../utils/logger';
+import { getRepository } from 'typeorm';
+import { IBoard, Board } from '../../entities/board.entity';
 
 /**
  * Repo | Get all boards
@@ -10,8 +7,8 @@ import { logger } from '../../utils/logger';
  * @category BoardRepo
  */
 const getAll = async (): Promise<Array<IBoard>> => {
-    const boards = await db.Boards;
-    return boards;
+    const db = getRepository(Board);    
+    return await db.find();
 };
 
 /**
@@ -21,8 +18,10 @@ const getAll = async (): Promise<Array<IBoard>> => {
  * @category BoardRepo
  */
 const addBoard = async (board: IBoard): Promise<IBoard> => {
-    const newBoard = (await db.addItem(board, BD_TABLE_BOARDS)) as IBoard;
-    return newBoard;
+    const db = getRepository(Board); 
+    const newBoard = db.create(board);
+    const savedBoard = db.save(newBoard);
+    return savedBoard;
 };
 
 /**
@@ -32,16 +31,12 @@ const addBoard = async (board: IBoard): Promise<IBoard> => {
  * @category BoardRepo
  */
 const removeBoard = async (id: string): Promise<IBoard | undefined> => {
-    try {
-        const board = (await db.removeItem(id, BD_TABLE_BOARDS)) as IBoard;
-        if (!board) {
-            throw new ApiError(`The board with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
-        }
-        return board;
-    } catch (err) {
-        logger.error(err.message);
+    const db = getRepository(Board); 
+    const deleted = await db.delete(id);
+    if (deleted.affected) {        
+        return deleted.raw;
     }
-    return undefined;
+    return;
 };
 
 /**
@@ -51,16 +46,8 @@ const removeBoard = async (id: string): Promise<IBoard | undefined> => {
  * @category BoardRepo
  */
 const getBoard = async (id: string): Promise<IBoard | undefined> => {
-    try {
-        const board = (await db.getItem(id, BD_TABLE_BOARDS)) as IBoard;
-        if (!board) {
-            throw new ApiError(`The board with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
-        }
-        return board;
-    } catch (err) {
-        logger.error(err.message);
-    }
-    return undefined;
+    const db = getRepository(Board);    
+    return await db.findOne(id);
 };
 
 /**
@@ -71,16 +58,14 @@ const getBoard = async (id: string): Promise<IBoard | undefined> => {
  * @category BoardRepo
  */
 const updateBoard = async (id: string, body: Partial<IBoard>): Promise<IBoard | undefined> => {
-    try {
-        const board = (await db.updateItem(id, body, BD_TABLE_BOARDS)) as IBoard;
-        if (!board) {
-            throw new ApiError(`The board with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
-        }
-        return board;
-    } catch (err) {
-        logger.error(err.message);
+    const db = getRepository(Board);
+    const user = await db.findOne(id);
+    if (user === undefined) {
+        return; 
     }
-    return undefined;
+
+    const update = await db.update(id, body);
+    return update.raw;
 };
 
 export { getAll, addBoard, removeBoard, getBoard, updateBoard };

@@ -1,5 +1,5 @@
 import * as usersRepo from './user.memory.repository';
-import { IUser, User } from './user.model';
+import { IUser } from '../../entities/user.entity';
 
 /**
  * Service | Get all Users
@@ -14,7 +14,7 @@ const getAll = async (): Promise<Array<IUser>> => usersRepo.getAll();
  * @returns {Promise<IUser>} - Return a new user
  * @category UserService
  */
-const addUser = async (user: IUser): Promise<IUser> => usersRepo.addUser(new User(user));
+const addUser = async (user: IUser): Promise<IUser> => usersRepo.addUser(user);
 
 /**
  * Service | Delete a user

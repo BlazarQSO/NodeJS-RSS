@@ -1,5 +1,5 @@
 import Router from 'express';
-import { User } from './user.model';
+import { User } from '../../entities/user.entity';
 import * as usersService from './user.service';
 import { STATUS_CODE } from '../../const';
 

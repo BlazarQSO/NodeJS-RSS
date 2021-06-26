@@ -1,5 +1,5 @@
 import * as boardRepo from './board.memory.repository';
-import { Board, IBoard } from './board.model';
+import { IBoard } from '../../entities/board.entity';
 
 /**
  * Service | Get all boards
@@ -14,7 +14,7 @@ const getAll = async (): Promise<Array<IBoard>> => boardRepo.getAll();
  * @returns {Promise<IBoard>}
  * @category BoardService
  */
-const addBoard = async (board: IBoard): Promise<IBoard> => boardRepo.addBoard(new Board(board));
+const addBoard = async (board: IBoard): Promise<IBoard> => boardRepo.addBoard(board);
 
 /**
  * Service | Delete a board
