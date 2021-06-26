@@ -1,9 +1,12 @@
 import { PORT } from './common/config';
 import app from './app';
 import { logger } from './utils/logger';
+import { tryDBConnect } from './common/connectToDB';
 
-app.listen(PORT, () => {
-    logger.info(`App is running on http://localhost:${PORT}`);
+tryDBConnect(() => {
+    app.listen(PORT, () => {
+        logger.info(`App is running on http://localhost:${PORT}`);
+    });
 });
 
 /**

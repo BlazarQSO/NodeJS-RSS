@@ -1,4 +1,5 @@
-import faker from 'faker';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { DB_TABLE_USERS } from '../const';
 
 /**
  * User Interface
@@ -32,40 +33,20 @@ interface IUserStrip {
  * Creates a new User.
  * @class
  */
+@Entity(DB_TABLE_USERS)
 export class User {
-    id: string;
-    name: string;
-    login: string;
-    password: string;
+    @PrimaryGeneratedColumn('uuid')
+    id!: string;
 
-    /**
-     * Create a User - constructor.
-     * @param {IUser} IUser - Information about the user
-     */
-    constructor({
-        id = faker.datatype.uuid(),
-        name = faker.name.findName(),
-        login = faker.internet.userName(),
-        password = faker.internet.password(),
-    }: IUser) {
-        /**
-         * @property {string} id - User id
-         */
-        this.id = id;
-        /**
-         * @property {string} name - User name
-         */
-        this.name = name;
-        /**
-         * @property {string} login - Login of the user
-         */
-        this.login = login;
-        /**
-         * @property {string} password - Password of the user
-         */
-        this.password = password;
-    }
+    @Column('varchar', { length: 25 })
+    name!: string;
 
+    @Column({ unique: true })
+    login!: string;
+
+    @Column('varchar', { length: 25 })
+    password!: string;
+    
     /**
      * Strip password
      * @property {Function} toResponse - Strip password from the user

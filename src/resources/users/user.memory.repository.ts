@@ -1,8 +1,6 @@
-import { db } from '../../database/index';
-import { BD_TABLE_USERS, STATUS_CODE } from '../../const';
-import { IUser } from './user.model';
-import { ApiError } from '../../utils/apiError';
-import { logger } from '../../utils/logger';
+import { User } from '../../entities/user.entity';
+import { IUser } from '../../entities/user.entity';
+import { getRepository } from 'typeorm';
 
 /**
  * Repo | Get all users
@@ -10,8 +8,8 @@ import { logger } from '../../utils/logger';
  * @category UserRepo
  */
 const getAll = async (): Promise<Array<IUser>> => {
-    const users = await db.Users;
-    return users;
+    const db = getRepository(User);    
+    return await db.find();
 };
 
 /**
@@ -21,8 +19,10 @@ const getAll = async (): Promise<Array<IUser>> => {
  * @category UserRepo
  */
 const addUser = async (user: IUser): Promise<IUser> => {
-    const newUser = (await db.addItem(user, BD_TABLE_USERS)) as IUser;
-    return newUser;
+    const db = getRepository(User); 
+    const newUser = db.create(user);
+    const savedUser = db.save(newUser);
+    return savedUser;
 };
 
 /**
@@ -32,16 +32,12 @@ const addUser = async (user: IUser): Promise<IUser> => {
  * @category UserRepo
  */
 const removeUser = async (id: string): Promise<IUser | undefined> => {
-    try {
-        const user = (await db.removeItem(id, BD_TABLE_USERS)) as IUser;
-        if (!user) {
-            throw new ApiError(`The user with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
-        }
-        return user;
-    } catch (err) {
-        logger.error(err.message);
+    const db = getRepository(User); 
+    const deleted = await db.delete(id);
+    if (deleted.affected) {        
+        return deleted.raw;
     }
-    return undefined;
+    return;
 };
 
 /**
@@ -51,16 +47,8 @@ const removeUser = async (id: string): Promise<IUser | undefined> => {
  * @category UserRepo
  */
 const getUser = async (id: string): Promise<IUser | undefined> => {
-    try {
-        const user = (await db.getItem(id, BD_TABLE_USERS)) as IUser;
-        if (!user) {
-            throw new ApiError(`The user with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
-        }
-        return user;
-    } catch (err) {
-        logger.error(err.message);
-    }
-    return undefined;
+    const db = getRepository(User);    
+    return await db.findOne(id);
 };
 
 /**
@@ -71,13 +59,14 @@ const getUser = async (id: string): Promise<IUser | undefined> => {
  * @category UserRepo
  */
 const updateUser = async (id: string, body: Partial<IUser>): Promise<IUser | undefined> => {
-    try {
-        const user = (await db.updateItem(id, body, BD_TABLE_USERS)) as IUser;
-        return user;
-    } catch (err) {
-        logger.error(err.message);
+    const db = getRepository(User);
+    const user = await db.findOne(id);
+    if (user === undefined) {
+        return; 
     }
-    return undefined;
+
+    const update = await db.update(id, body);
+    return update.raw;
 };
 
 export { getAll, addUser, removeUser, getUser, updateUser };

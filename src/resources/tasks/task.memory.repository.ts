@@ -1,8 +1,5 @@
-import { db } from '../../database';
-import { BD_TABLE_TASKS, STATUS_CODE } from '../../const';
-import { ITask } from './task.model';
-import { ApiError } from '../../utils/apiError';
-import { logger } from '../../utils/logger';
+import { getRepository } from 'typeorm';
+import { ITask, Task } from '../../entities/task.entity';
 
 /**
  * Repo | Get all tasks
@@ -10,8 +7,8 @@ import { logger } from '../../utils/logger';
  * @category TaskRepo
  */
 const getAll = async (): Promise<Array<ITask>> => {
-    const tasks = await db.Tasks;
-    return tasks;
+    const db = getRepository(Task);    
+    return await db.find();
 };
 
 /**
@@ -21,8 +18,10 @@ const getAll = async (): Promise<Array<ITask>> => {
  * @category TaskRepo
  */
 const addTask = async (task: ITask): Promise<ITask> => {
-    const newTask = (await db.addItem(task, BD_TABLE_TASKS)) as ITask;
-    return newTask;
+    const db = getRepository(Task); 
+    const newTask = db.create(task);
+    const savedTask = db.save(newTask);
+    return savedTask;
 };
 
 /**
@@ -32,16 +31,12 @@ const addTask = async (task: ITask): Promise<ITask> => {
  * @category TaskRepo
  */
 const removeTask = async (id: string): Promise<ITask | undefined> => {
-    try {
-        const task = (await db.removeItem(id, BD_TABLE_TASKS)) as ITask;
-        if (!task) {
-            throw new ApiError(`The task with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
-        }
-        return task;
-    } catch (err) {
-        logger.error(err.message);
+    const db = getRepository(Task); 
+    const deleted = await db.delete(id);
+    if (deleted.affected) {        
+        return deleted.raw;
     }
-    return undefined;
+    return;
 };
 
 /**
@@ -51,16 +46,8 @@ const removeTask = async (id: string): Promise<ITask | undefined> => {
  * @category TaskRepo
  */
 const getTask = async (id: string): Promise<ITask | undefined> => {
-    try {
-        const task = (await db.getItem(id, BD_TABLE_TASKS)) as ITask;
-        if (!task) {
-            throw new ApiError(`The task with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
-        }
-        return task;
-    } catch (err) {
-        logger.error(err.message);
-    }
-    return undefined;
+    const db = getRepository(Task);    
+    return await db.findOne(id);
 };
 
 /**
@@ -71,16 +58,14 @@ const getTask = async (id: string): Promise<ITask | undefined> => {
  * @category TaskRepo
  */
 const updateTask = async (id: string, body: Partial<ITask>): Promise<ITask | undefined> => {
-    try {
-        const task = (await db.updateItem(id, body, BD_TABLE_TASKS)) as ITask;
-        if (!task) {
-            throw new ApiError(`The task with id ${id} was not found`, STATUS_CODE.NOT_FOUND);
-        }
-        return task;
-    } catch (err) {
-        logger.error(err.message);
+    const db = getRepository(Task);
+    const user = await db.findOne(id);
+    if (user === undefined) {
+        return; 
     }
-    return undefined;
+
+    const update = await db.update(id, body);
+    return update.raw;
 };
 
 export { getAll, addTask, removeTask, getTask, updateTask };
