@@ -11,6 +11,7 @@ const router = Router.Router();
  * @route {GET} /users/
  * @category UserRouter
  */
+// GetAll => FindAll
 router.route('/').get(async (_req, res) => {
     const users = await usersService.getAll();
     res.json(users.map(User.toResponse));
@@ -22,6 +23,7 @@ router.route('/').get(async (_req, res) => {
  * @route {POST} /users/
  * @category UserRouter
  */
+// Create => Create 
 router.route('/').post(async (req, res) => {
     const user = await usersService.addUser(req.body);
     res.status(STATUS_CODE.CREATED).send(User.toResponse(user));
@@ -33,6 +35,7 @@ router.route('/').post(async (req, res) => {
  * @route {DELETE} /users/:id
  * @category UserRouter
  */
+// Delete => delete
 router.route('/:id').delete(async (req, res) => {
     await usersService.removeUser(req.params.id);
     res.sendStatus(STATUS_CODE.NO_CONTENT);
@@ -44,6 +47,7 @@ router.route('/:id').delete(async (req, res) => {
  * @route {GET} /users/:id
  * @category UserRouter
  */
+// GetUser => FindOne
 router.route('/:id').get(async (req, res) => {
     const user = await usersService.getUser(req.params.id);
     if (user) {
@@ -59,6 +63,7 @@ router.route('/:id').get(async (req, res) => {
  * @route {PUT} /users/:id
  * @category UserRouter
  */
+// updateUser => update
 router.route('/:id').put(async (req, res) => {
     const user = await usersService.updateUser(req.params.id, req.body);
     if (user) {
