@@ -1,6 +1,5 @@
-import { CreateUserDto } from "../dto/create-user.dto";
-import { UpdateUserDto } from "../dto/update-user.dto";
-import { UserDto } from "../dto/user.dto";
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 export interface IUser {
     id: string;
@@ -28,7 +27,7 @@ type Nullable<T> = T | null;
 export interface UserStorage {
     addItem: (createUserDto: CreateUserDto, table: string) => UserEntity;
     getAll: (table: string) => UserEntity[];    
-    removeItem: (id: string, table: string) => Nullable<Item>;
+    removeItem: (id: string, table: string) => boolean;
     getItem: (id: string, table: string) => UserEntity;
     updateItem: (id: string, updateUserDto: UpdateUserDto, table: string) => UserEntity;    
 }

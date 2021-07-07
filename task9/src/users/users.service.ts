@@ -30,8 +30,8 @@ export class UsersService {
     return this.storage.updateItem(id, updateUserDto, BD_TABLE_USERS) as UserEntity;
   }
 
-  remove(id: string): UserEntity {
+  remove(id: string): boolean {
     this.logger.warn('remove a user');
-    return this.storage.removeItem(id, BD_TABLE_USERS) as UserEntity;
+    return this.storage.removeItem(id, BD_TABLE_USERS);    
   }
 }

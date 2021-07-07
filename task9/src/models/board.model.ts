@@ -19,7 +19,7 @@ export class Board implements IBoard {
 
     constructor({
         id = randomUUID(),
-        title,
+        title = 'title',
         columns = [
             {
                 id: randomUUID(),

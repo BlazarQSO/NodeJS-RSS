@@ -1,8 +1,7 @@
 import { DEFAULT_COUNT_USERS, BD_TABLE_USERS, BD_TABLE_BOARDS, BD_TABLE_TASKS } from '../const';
 import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { UserEntity } from 'src/users/interfaces/user.interface';
+import { IUser, UserEntity } from 'src/users/interfaces/user.interface';
 import { Board, IBoard, ITask, Task, User } from 'src/models';
 
 type Item = UserEntity | ITask | IBoard;
@@ -24,7 +23,7 @@ class Database {
     initDatabase(count: number) {
         for (let i = 0; i < count; i += 1) {
             this.Users.push(new User({} as UserEntity));
-            this.Boards.push(new Board({} as IBoard));
+            this.Boards.push(new Board({} as IBoard));            
             this.Tasks.push(
                 new Task({
                     userId: this.Users[i]?.id || null,
@@ -33,33 +32,43 @@ class Database {
                 } as ITask)
             );
         }
+        console.log(this.Tasks);
     }
   
     getAll(table: string) {
         return this[table as Tables];
     }
-
-    addItem(userDto: CreateUserDto, table: string): Item {
-        const user = new User(userDto);
-        this[table as Tables].push(user as Items);
-        return user;
+    
+    addItem(itemDto: Item, table: string): Item {        
+        let item: Item;
+        switch(table) {
+            case BD_TABLE_USERS: 
+                item = new User(itemDto as IUser);
+                break;
+            case BD_TABLE_TASKS:
+                item = new Task(itemDto as ITask);
+                break;                
+        }        
+        this[table as Tables].push(item as Items);
+        return item;
     }
    
-    removeItem(id: string, table: string): Nullable<Item> {
+    removeItem(id: string, table: string): Boolean {
         if (this.foundItem(id, table)) {
             this[table as Tables] = (this[table as Tables] as Array<Item>).filter(
                 (item: Item) => item.id !== id
             ) as Array<Items>;
             this.removeDependencies(id, table);
+            return true;
         }
-        return null;
+        return false;
     }
 
     getItem(id: string, table: string): Item {
         return this.foundItem(id, table);
     }
     
-    updateItem(id: string, body: UpdateUserDto, table: string): Item {
+    updateItem(id: string, body: Item, table: string): Item {
         const index = this[table as Tables].findIndex((item: Item) => item.id === id);
         const updated = { ...this[table as Tables][index], id, ...body };
         this[table as Tables][index] = updated as Item;

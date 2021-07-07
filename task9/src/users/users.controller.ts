@@ -20,8 +20,7 @@ export class UsersController {
     throw new HttpException('Internal server error!!!', HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-  @Get()
-  @HttpCode(HttpStatus.OK)
+  @Get()  
   findAll() {    
     const users = this.usersService.findAll();    
     if (Array.isArray(users)) {
@@ -53,6 +52,12 @@ export class UsersController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(id);    
+    const isDelete = this.usersService.remove(id);
+    if (isDelete) {
+      this.logger.log('remove a user');
+    } else {
+      this.logger.log('user not found');
+      throw new HttpException('User not found!!!', HttpStatus.NOT_FOUND); 
+    }    
   }
 }
