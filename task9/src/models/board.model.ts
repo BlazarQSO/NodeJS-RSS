@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { randomUUID } from 'crypto';
 
 export interface IColumn {
     id: string;
@@ -18,13 +18,13 @@ export class Board implements IBoard {
     columns: Array<IColumn>;
 
     constructor({
-        id = faker.datatype.uuid(),
-        title = faker.name.title(),
+        id = randomUUID(),
+        title,
         columns = [
             {
-                id: faker.datatype.uuid(),
-                title: faker.name.title(),
-                order: faker.datatype.number(),
+                id: randomUUID(),
+                title: 'title',
+                order: Date.now(),
             },
         ],
     }: IBoard) {        

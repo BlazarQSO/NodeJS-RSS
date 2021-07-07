@@ -17,7 +17,9 @@ class Database {
     Boards: Array<IBoard> = [];
     Tasks: Array<ITask> = [];
 
-    constructor() {}
+    constructor() {
+        this.initDatabase(DEFAULT_COUNT_USERS);
+    }
    
     initDatabase(count: number) {
         for (let i = 0; i < count; i += 1) {
@@ -58,8 +60,6 @@ class Database {
     }
     
     updateItem(id: string, body: UpdateUserDto, table: string): Item {
-        // this.foundItem(id, table);
-
         const index = this[table as Tables].findIndex((item: Item) => item.id === id);
         const updated = { ...this[table as Tables][index], id, ...body };
         this[table as Tables][index] = updated as Item;
@@ -94,6 +94,4 @@ class Database {
     }
 }
 
-export { Database }
-// const db = new Database(DEFAULT_COUNT_USERS);
-// export { db, Item };
+export { Database };

@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { IUser, IUserStrip } from '../users/interfaces/user.interface';
 
 export class User implements IUser {
@@ -7,11 +8,14 @@ export class User implements IUser {
     password: string;
 
     constructor({
-        id = String(Date.now()), name, login, password,
+        id = randomUUID(), 
+        name = 'name', 
+        login = 'login',
+        password = '12345',
     }: IUser) {
         this.id = id;
         this.name = name;
-        this.login = login;
+        this.login = login; 
         this.password = password;
     }
 

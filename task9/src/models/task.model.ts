@@ -1,4 +1,4 @@
-import faker from 'faker';
+import { randomUUID } from "crypto";
 
 export interface ITask {
     id: string;
@@ -20,13 +20,13 @@ export class Task {
     columnId: string | null;
 
     constructor({
-        id = faker.datatype.uuid(),
-        title = faker.name.title(),
-        order = faker.datatype.number(),
-        description = faker.commerce.productDescription(),
+        id = randomUUID(),
+        title = 'title',
+        order = Date.now(),
+        description = 'description',
         userId = null,
-        boardId = faker.datatype.uuid(),
-        columnId = faker.datatype.uuid(),
+        boardId = randomUUID(),
+        columnId = randomUUID(),
     }: ITask) {        
         this.id = id;        
         this.title = title;        

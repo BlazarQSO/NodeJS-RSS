@@ -26,7 +26,7 @@ type Item = UserEntity; // | ITask | IBoard;
 type Nullable<T> = T | null;
 
 export interface UserStorage {
-    addItem: (createUserDto: CreateUserDto) => UserEntity;
+    addItem: (createUserDto: CreateUserDto, table: string) => UserEntity;
     getAll: (table: string) => UserEntity[];    
     removeItem: (id: string, table: string) => Nullable<Item>;
     getItem: (id: string, table: string) => UserEntity;
