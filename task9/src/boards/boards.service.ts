@@ -1,15 +1,16 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { BD_TABLE_BOARDS } from 'src/const';
+import { IStorage } from 'src/store/storage.interfaces';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
-import { BoardEntity, BoardStorage } from './interface/board.interface';
+import { BoardEntity } from './interface/board.interface';
 
 @Injectable()
 export class BoardsService {
   private readonly logger = new Logger(BoardsService.name);
-  
-  constructor(@Inject('BoardStorage') private storage: BoardStorage) {}  
-  
+
+  constructor(@Inject('IStorage') private storage: IStorage) {}
+
   create(createBoardDto: CreateBoardDto): BoardEntity {
     this.logger.log('add a new board');
     return this.storage.addItem(createBoardDto, BD_TABLE_BOARDS) as BoardEntity;
@@ -27,11 +28,15 @@ export class BoardsService {
 
   update(id: string, updateBoardDto: UpdateBoardDto): BoardEntity {
     this.logger.log('update a board');
-    return this.storage.updateItem(id, updateBoardDto, BD_TABLE_BOARDS) as BoardEntity;
+    return this.storage.updateItem(
+      id,
+      updateBoardDto,
+      BD_TABLE_BOARDS,
+    ) as BoardEntity;
   }
 
   async remove(id: string) {
     this.logger.warn('remove a board');
-    return this.storage.removeItem(id, BD_TABLE_BOARDS);  
+    return this.storage.removeItem(id, BD_TABLE_BOARDS);
   }
 }

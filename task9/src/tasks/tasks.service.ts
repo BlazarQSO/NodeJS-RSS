@@ -1,14 +1,15 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { BD_TABLE_TASKS } from 'src/const';
+import { IStorage } from 'src/store/storage.interfaces';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { TaskEntity, TaskStorage } from './interface/task.interface';
+import { TaskEntity } from './interface/task.interface';
 
 @Injectable()
 export class TasksService {
   private readonly logger = new Logger(TasksService.name);
-  
-  constructor(@Inject('TaskStorage') private storage: TaskStorage) {} 
+
+  constructor(@Inject('IStorage') private storage: IStorage) {}
 
   create(createTaskDto: CreateTaskDto): TaskEntity {
     this.logger.log('add a new task');
@@ -27,7 +28,11 @@ export class TasksService {
 
   update(id: string, updateTaskDto: UpdateTaskDto): TaskEntity {
     this.logger.log('update a task');
-    return this.storage.updateItem(id, updateTaskDto, BD_TABLE_TASKS) as TaskEntity;
+    return this.storage.updateItem(
+      id,
+      updateTaskDto,
+      BD_TABLE_TASKS,
+    ) as TaskEntity;
   }
 
   remove(id: string): boolean {

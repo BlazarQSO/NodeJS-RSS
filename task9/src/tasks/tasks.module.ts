@@ -5,9 +5,12 @@ import { Database } from 'src/store/storage';
 
 @Module({
   controllers: [TasksController],
-  providers: [TasksService,{
-    provide: 'TaskStorage',
-    useClass: Database,
-  }]
+  providers: [
+    TasksService,
+    {
+      provide: 'IStorage',
+      useClass: Database,
+    },
+  ],
 })
 export class TasksModule {}

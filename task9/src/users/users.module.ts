@@ -5,9 +5,12 @@ import { Database } from 'src/store/storage';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, {
-    provide: 'UserStorage',
-    useClass: Database,
-  }]
+  providers: [
+    UsersService,
+    {
+      provide: 'IStorage',
+      useClass: Database,
+    },
+  ],
 })
 export class UsersModule {}

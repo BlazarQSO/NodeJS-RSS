@@ -1,14 +1,15 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { BD_TABLE_USERS } from 'src/const';
+import { IStorage } from 'src/store/storage.interfaces';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UserEntity, UserStorage } from './interfaces/user.interface';
+import { UserEntity } from './interfaces/user.interface';
 
 @Injectable()
 export class UsersService {
   private readonly logger = new Logger(UsersService.name);
-  
-  constructor(@Inject('UserStorage') private storage: UserStorage) {}  
+
+  constructor(@Inject('IStorage') private storage: IStorage) {}
 
   create(createUserDto: CreateUserDto): UserEntity {
     this.logger.log('add a new user');
@@ -27,11 +28,15 @@ export class UsersService {
 
   update(id: string, updateUserDto: UpdateUserDto): UserEntity {
     this.logger.log('update a user');
-    return this.storage.updateItem(id, updateUserDto, BD_TABLE_USERS) as UserEntity;
+    return this.storage.updateItem(
+      id,
+      updateUserDto,
+      BD_TABLE_USERS,
+    ) as UserEntity;
   }
 
   remove(id: string): boolean {
     this.logger.warn('remove a user');
-    return this.storage.removeItem(id, BD_TABLE_USERS);    
+    return this.storage.removeItem(id, BD_TABLE_USERS);
   }
 }

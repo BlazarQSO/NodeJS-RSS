@@ -1,8 +1,8 @@
 import { Length } from 'class-validator';
 
 export class CreateBoardDto {
-    id: string;
+  id: string;
 
-    @Length(3, 50)
-    title: string;
+  @Length(3, 50)
+  title: string;
 }
