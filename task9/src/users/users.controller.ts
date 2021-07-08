@@ -23,7 +23,7 @@ export class UsersController {
 
   constructor(
     private readonly usersService: UsersService,
-    private readonly tasksService: TasksService
+    private readonly tasksService: TasksService,
   ) {}
 
   @Post()

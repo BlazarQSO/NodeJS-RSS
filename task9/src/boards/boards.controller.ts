@@ -22,7 +22,7 @@ export class BoardsController {
 
   constructor(
     private readonly boardsService: BoardsService,
-    private readonly tasksService: TasksService
+    private readonly tasksService: TasksService,
   ) {}
 
   @Post()
@@ -75,7 +75,7 @@ export class BoardsController {
   remove(@Param('id') id: string) {
     const isDelete = this.boardsService.remove(id);
     if (isDelete) {
-      this.tasksService.removeDependencies(id, BD_TABLE_BOARDS)
+      this.tasksService.removeDependencies(id, BD_TABLE_BOARDS);
       this.logger.log('remove a board');
     } else {
       this.logger.log('board not found');

@@ -13,6 +13,6 @@ import { TasksModule } from 'src/tasks/tasks.module';
       useClass: Database,
     },
   ],
-  imports: [TasksModule]
+  imports: [TasksModule],
 })
 export class UsersModule {}
