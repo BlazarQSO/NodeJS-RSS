@@ -1,15 +1,14 @@
-import { IsAlphanumeric, Length } from 'class-validator';
+import { Length } from 'class-validator';
 
 export class CreateUserDto {
     id: string;
 
-    @Length(3, 20)
+    @Length(3, 50)
     name: string;
 
-    @IsAlphanumeric()
-    @Length(3, 20)    
+    @Length(3, 50)    
     login: string;
 
-    @Length(3, 20)
+    @Length(3, 50)
     password: string;
 }

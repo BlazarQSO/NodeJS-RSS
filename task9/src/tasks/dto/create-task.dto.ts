@@ -13,8 +13,4 @@ export class CreateTaskDto {
     description: string;
 
     boardId: string;
-
-    set setBoardId(id: string) {
-        this.boardId = id;
-    }
 }

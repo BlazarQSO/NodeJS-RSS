@@ -16,7 +16,7 @@ export class BoardsService {
   }
 
   findAll(): BoardEntity[] {
-    this.logger.log('get all users');
+    this.logger.log('get all boards');
     return this.storage.getAll(BD_TABLE_BOARDS) as BoardEntity[];
   }
 
@@ -30,7 +30,7 @@ export class BoardsService {
     return this.storage.updateItem(id, updateBoardDto, BD_TABLE_BOARDS) as BoardEntity;
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     this.logger.warn('remove a board');
     return this.storage.removeItem(id, BD_TABLE_BOARDS);  
   }

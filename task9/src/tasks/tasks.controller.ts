@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger, HttpStatus, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Logger, HttpStatus, HttpException, Put } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -10,8 +10,8 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
-  create(@Param('boardId') boardId, @Body() createTaskDto: CreateTaskDto) {
-    createTaskDto.setBoardId = boardId;
+  create(@Param('boardId') boardId, @Body() createTaskDto: CreateTaskDto) {    
+    createTaskDto.boardId = boardId;
 
     const task = this.tasksService.create(createTaskDto);
     if (task) {
@@ -41,7 +41,7 @@ export class TasksController {
     throw new HttpException('Task not found!!!', HttpStatus.NOT_FOUND);    
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
     const task = this.tasksService.update(id, updateTaskDto);
     if (task) {
