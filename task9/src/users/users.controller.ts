@@ -14,12 +14,17 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '../models';
+import { TasksService } from 'src/tasks/tasks.service';
+import { BD_TABLE_USERS } from 'src/const';
 
 @Controller('users')
 export class UsersController {
   private readonly logger = new Logger(UsersController.name);
 
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly tasksService: TasksService
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -71,6 +76,7 @@ export class UsersController {
   remove(@Param('id') id: string) {
     const isDelete = this.usersService.remove(id);
     if (isDelete) {
+      this.tasksService.removeDependencies(id, BD_TABLE_USERS);
       this.logger.log('remove a user');
     } else {
       this.logger.log('user not found');

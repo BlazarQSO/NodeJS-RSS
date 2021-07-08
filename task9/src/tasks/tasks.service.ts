@@ -39,4 +39,8 @@ export class TasksService {
     this.logger.warn('remove a task');
     return this.storage.removeItem(id, BD_TABLE_TASKS);
   }
+
+  removeDependencies(id: string, table: string) {
+    this.storage.removeDependencies(id, table);
+  }
 }

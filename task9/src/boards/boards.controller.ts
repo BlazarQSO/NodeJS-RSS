@@ -10,6 +10,8 @@ import {
   HttpStatus,
   Put,
 } from '@nestjs/common';
+import { BD_TABLE_BOARDS } from 'src/const';
+import { TasksService } from 'src/tasks/tasks.service';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
@@ -18,7 +20,10 @@ import { UpdateBoardDto } from './dto/update-board.dto';
 export class BoardsController {
   private readonly logger = new Logger(BoardsController.name);
 
-  constructor(private readonly boardsService: BoardsService) {}
+  constructor(
+    private readonly boardsService: BoardsService,
+    private readonly tasksService: TasksService
+  ) {}
 
   @Post()
   create(@Body() createBoardDto: CreateBoardDto) {
@@ -70,6 +75,7 @@ export class BoardsController {
   remove(@Param('id') id: string) {
     const isDelete = this.boardsService.remove(id);
     if (isDelete) {
+      this.tasksService.removeDependencies(id, BD_TABLE_BOARDS)
       this.logger.log('remove a board');
     } else {
       this.logger.log('board not found');

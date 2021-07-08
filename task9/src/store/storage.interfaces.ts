@@ -16,6 +16,7 @@ export interface IStorage {
   getAll: (table: string) => Entity[];
   removeItem: (id: string, table: string) => boolean;
   getItem: (id: string, table: string) => Entity;
+  removeDependencies: (id: string, table: string) => void;
   updateItem: (
     id: string,
     updateUserDto: StorageUpdateDto,

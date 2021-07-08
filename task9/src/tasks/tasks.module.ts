@@ -12,5 +12,6 @@ import { Database } from 'src/store/storage';
       useClass: Database,
     },
   ],
+  exports: [TasksService]
 })
 export class TasksModule {}
