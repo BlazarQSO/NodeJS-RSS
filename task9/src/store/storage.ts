@@ -1,6 +1,5 @@
 import { DEFAULT_COUNT_USERS, BD_TABLE_USERS, BD_TABLE_BOARDS, BD_TABLE_TASKS } from '../const';
 import { Injectable } from '@nestjs/common';
-import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 import { IUser, UserEntity } from 'src/users/interfaces/user.interface';
 import { Board, IBoard, ITask, Task, User } from 'src/models';
 
@@ -31,8 +30,7 @@ class Database {
                     columnId: this.Boards[i]?.columns[0]?.id || null,
                 } as ITask)
             );
-        }
-        console.log(this.Tasks);
+        }    
     }
   
     getAll(table: string) {
@@ -47,6 +45,9 @@ class Database {
                 break;
             case BD_TABLE_TASKS:
                 item = new Task(itemDto as ITask);
+                break;  
+            case BD_TABLE_BOARDS:
+                item = new Board(itemDto as IBoard);
                 break;                
         }        
         this[table as Tables].push(item as Items);

@@ -7,12 +7,14 @@ export class CreateTaskDto {
     title: string;
     
     @IsNumber()    
-    order: string;
+    order: number;
     
     @Length(3, 120)
     description: string;
 
-    set boardId(id: string) {
+    boardId: string;
+
+    set setBoardId(id: string) {
         this.boardId = id;
     }
 }

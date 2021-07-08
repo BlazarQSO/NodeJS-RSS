@@ -11,7 +11,7 @@ export class TasksController {
 
   @Post()
   create(@Param('boardId') boardId, @Body() createTaskDto: CreateTaskDto) {
-    createTaskDto.boardId = boardId;
+    createTaskDto.setBoardId = boardId;
 
     const task = this.tasksService.create(createTaskDto);
     if (task) {
